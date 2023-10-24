@@ -18,6 +18,7 @@ import (
 )
 
 func TestGetAccountAPI(t *testing.T) {
+	t.Parallel() // Run in parallel
 	account := randomAccount()
 
 	testCases := []struct {
@@ -81,9 +82,8 @@ func TestGetAccountAPI(t *testing.T) {
 		},
 	}
 
-	for i := range testCases {
-		tc := testCases[i]
-
+	for _, tc := range testCases {
+		tc := tc // capture range variable https://golang.org/pkg/testing/#hdr-Subtests_and_Sub_benchmarks
 		t.Run(tc.name, func(t *testing.T) {
 			ctrl := gomock.NewController(t)
 			defer ctrl.Finish()
